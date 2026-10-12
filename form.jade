@@ -1,0 +1,40 @@
+extends ../layout.jade
+
+block content
+  h1.h2.mb-3= title
+  if categories.length
+    form.card.card-body.form-card(method="post" action=action)
+      .row.g-3
+        .col-md-6
+          label.form-label(for="assetTag") Asset ID / tag *
+          input#assetTag.form-control(type="text" name="assetTag" maxlength="60" required value=asset.assetTag || '')
+        .col-md-6
+          label.form-label(for="serialNumber") Serial number *
+          input#serialNumber.form-control(type="text" name="serialNumber" maxlength="120" required value=asset.serialNumber || '')
+        .col-md-6
+          label.form-label(for="categoryId") Category *
+          select#categoryId.form-select(name="categoryId" required)
+            option(value="") Choose a category
+            each category in categories
+              option(value=category.id selected=(String(category.id) === String(asset.CategoryId)))= category.name
+        .col-md-6
+          label.form-label(for="branch") Branch *
+          input#branch.form-control(type="text" name="branch" maxlength="120" required value=asset.branch || '')
+        .col-md-6
+          label.form-label(for="make") Make *
+          input#make.form-control(type="text" name="make" maxlength="120" required value=asset.make || '')
+        .col-md-6
+          label.form-label(for="model") Model *
+          input#model.form-control(type="text" name="model" maxlength="120" required value=asset.model || '')
+        .col-md-6
+          label.form-label(for="purchaseDate") Purchase date *
+          input#purchaseDate.form-control(type="date" name="purchaseDate" required value=asset.purchaseDate || '')
+        .col-md-6
+          label.form-label(for="purchaseCost") Purchase cost *
+          input#purchaseCost.form-control(type="number" name="purchaseCost" min="0" step="0.01" required value=asset.purchaseCost || '')
+      .mt-4
+        button.btn.btn-primary(type="submit") Save asset
+        a.btn.btn-outline-secondary.ms-2(href="/assets") Cancel
+  else
+    .alert.alert-warning Create an asset category before adding assets.
+    a.btn.btn-primary(href="/categories/new") Add a category

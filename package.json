@@ -1,0 +1,26 @@
+{
+  "name": "company-asset-tracker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Company employee asset tracking application",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "connect-flash": "^0.1.1",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "pg": "^8.13.1",
+    "pg-hstore": "^2.3.4",
+    "pug": "^3.0.3",
+    "sequelize": "^6.37.5"
+  },
+  "overrides": {
+    "uuid": "^11.1.1"
+  }
+}

@@ -1,0 +1,44 @@
+extends ../layout.jade
+
+block content
+  .d-flex.flex-wrap.justify-content-between.align-items-center.gap-2.mb-3
+    div
+      h1.h2.mb-1 Asset history
+      p.text-muted.mb-0= asset.assetTag + ' · ' + asset.make + ' ' + asset.model + ' · ' + asset.serialNumber
+    a.btn.btn-outline-secondary(href="/assets") Back to assets
+  .card.card-body.mb-4
+    .row.g-3
+      .col-sm-6.col-lg-3
+        .small.text-muted Category
+        .fw-semibold= asset.Category.name
+      .col-sm-6.col-lg-3
+        .small.text-muted Purchase date
+        .fw-semibold= asset.purchaseDate
+      .col-sm-6.col-lg-3
+        .small.text-muted Purchase cost
+        .fw-semibold= formatMoney(asset.purchaseCost)
+      .col-sm-6.col-lg-3
+        .small.text-muted Current status
+        .fw-semibold= asset.status
+  h2.h4 Timeline
+  if events.length
+    .table-responsive
+      table.table.table-striped.align-middle.data-table
+        thead
+          tr
+            th Date
+            th Event
+            th Employee
+            th Branch
+            th Reason
+        tbody
+          each event in events
+            tr
+              td= event.eventDate.toLocaleString()
+              td
+                span.badge(class=event.type === 'scrap' ? 'text-bg-danger' : 'text-bg-secondary')= event.type
+              td= event.Employee ? event.Employee.name : '—'
+              td= event.branch || '—'
+              td= event.reason || '—'
+  else
+    .text-muted No history is recorded for this asset.

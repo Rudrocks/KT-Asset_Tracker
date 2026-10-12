@@ -1,0 +1,30 @@
+extends ../layout.jade
+
+block content
+  h1.h2.mb-1 Scrapped assets report
+  p.text-muted Historical register of assets no longer in service.
+  .table-responsive
+    table.table.table-striped.align-middle.data-table
+      thead
+        tr
+          th Asset
+          th Category
+          th Make / Model
+          th Branch
+          th Purchase date
+          th Purchase cost
+          th History
+      tbody
+        each asset in assets
+          tr
+            td
+              strong= asset.assetTag
+              br
+              small.text-muted= asset.serialNumber
+            td= asset.Category.name
+            td= asset.make + ' ' + asset.model
+            td= asset.branch
+            td= asset.purchaseDate
+            td= formatMoney(asset.purchaseCost)
+            td
+              a.btn.btn-sm.btn-outline-primary(href='/assets/' + asset.id + '/history') View history

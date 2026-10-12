@@ -1,0 +1,32 @@
+body {
+  background: #f7f8fa;
+  color: #1e293b;
+}
+
+main.container {
+  min-height: calc(100vh - 145px);
+}
+
+.metric-card,
+.form-card,
+.table-responsive {
+  border: 1px solid #e2e8f0;
+  border-radius: 0.65rem;
+  background-color: #fff;
+}
+
+.metric-card .display-6 {
+  font-weight: 650;
+}
+
+.form-card {
+  max-width: 850px;
+}
+
+table.dataTable {
+  width: 100% !important;
+}
+
+footer {
+  background: #f7f8fa;
+}

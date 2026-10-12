@@ -1,0 +1,26 @@
+extends ../layout.jade
+
+block content
+  h1.h2.mb-3 Issue an asset
+  if !assets.length
+    .alert.alert-info There are no assets available in stock to issue.
+  else if !employees.length
+    .alert.alert-info Add an active employee before issuing an asset.
+  else
+    form.card.card-body.form-card(method="post" action="/issues")
+      .mb-3
+        label.form-label(for="assetId") Asset *
+        select#assetId.form-select(name="assetId" required)
+          option(value="") Choose an asset
+          each asset in assets
+            option(value=asset.id)= asset.assetTag + ' · ' + asset.Category.name + ' · ' + asset.make + ' ' + asset.model + ' (' + asset.branch + ')'
+      .mb-3
+        label.form-label(for="employeeId") Employee *
+        select#employeeId.form-select(name="employeeId" required)
+          option(value="") Choose an employee
+          each employee in employees
+            option(value=employee.id)= employee.employeeCode + ' · ' + employee.name + ' (' + employee.branch + ')'
+      button.btn.btn-primary(type="submit") Issue asset
+      a.btn.btn-outline-secondary.ms-2(href="/assets") Cancel
+
+      

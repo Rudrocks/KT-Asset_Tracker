@@ -1,0 +1,55 @@
+extends layout.jade
+
+block content
+  .d-flex.flex-wrap.justify-content-between.align-items-center.gap-2.mb-4
+    div
+      h1.h2.mb-1 Asset overview
+      p.text-muted.mb-0 Track company equipment, assignments, and returns.
+    a.btn.btn-primary(href="/assets/new") Add an asset
+  .row.g-3.mb-4
+    .col-sm-6.col-xl-3
+      .card.metric-card
+        .card-body
+          .text-muted Active employees
+          .display-6= employeeCount
+    .col-sm-6.col-xl-3
+      .card.metric-card
+        .card-body
+          .text-muted Assets in stock
+          .display-6= inStockCount
+    .col-sm-6.col-xl-3
+      .card.metric-card
+        .card-body
+          .text-muted Assets issued
+          .display-6= issuedCount
+    .col-sm-6.col-xl-3
+      .card.metric-card
+        .card-body
+          .text-muted Assets scrapped
+          .display-6= scrappedCount
+  .d-flex.justify-content-between.align-items-center.mb-2
+    h2.h4.mb-0 Recent asset activity
+    a(href="/assets") View assets
+  if recentEvents.length
+    .table-responsive
+      table.table.table-striped.align-middle
+        thead
+          tr
+            th Date
+            th Activity
+            th Asset
+            th Employee
+            th Reason
+        tbody
+          each event in recentEvents
+            tr
+              td= event.eventDate.toLocaleDateString()
+              td
+                span.badge(class=event.type === 'scrap' ? 'text-bg-danger' : 'text-bg-secondary')= event.type
+              td
+                if event.Asset
+                  a(href='/assets/' + event.Asset.id + '/history')= event.Asset.assetTag + ' · ' + event.Asset.make + ' ' + event.Asset.model
+              td= event.Employee ? event.Employee.name : '—'
+              td= event.reason || '—'
+  else
+    .card.card-body.text-muted No asset activity yet. Add an asset to start the register.

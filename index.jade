@@ -1,0 +1,51 @@
+extends ../layout.jade
+
+block content
+  .d-flex.flex-wrap.justify-content-between.align-items-center.gap-2.mb-3
+    h1.h2.mb-0 Assets
+    a.btn.btn-primary(href="/assets/new") Add asset
+  form.row.g-2.mb-3(method="get" action="/assets")
+    .col-sm-4
+      input.form-control(type="search" name="search" placeholder="Search tag, serial, make, model..." value=search)
+    .col-sm-3
+      select.form-select(name="categoryId")
+        option(value="") All categories
+        each category in categories
+          option(value=category.id selected=(String(category.id) === String(categoryId)))= category.name
+    .col-sm-2
+      select.form-select(name="status")
+        option(value="") All statuses
+        option(value="in_stock" selected=(status === 'in_stock')) In stock
+        option(value="issued" selected=(status === 'issued')) Issued
+    .col-auto
+      button.btn.btn-outline-primary(type="submit") Filter
+      a.btn.btn-outline-secondary.ms-2(href="/assets") Clear
+  .table-responsive
+    table.table.table-striped.table-hover.align-middle.data-table
+      thead
+        tr
+          th Asset / Serial
+          th Type
+          th Make / Model
+          th Branch
+          th Purchase cost
+          th Status / Holder
+          th
+      tbody
+        each asset in assets
+          tr
+            td
+              a.fw-semibold(href='/assets/' + asset.id + '/history')= asset.assetTag
+              br
+              small.text-muted= asset.serialNumber
+            td= asset.Category.name
+            td= asset.make + ' ' + asset.model
+            td= asset.branch
+            td= formatMoney(asset.purchaseCost)
+            td
+              span.badge(class=asset.status === 'issued' ? 'text-bg-primary' : 'text-bg-success')= asset.status === 'issued' ? 'Issued' : 'In stock'
+              if asset.Employee
+                br
+                small.text-muted= asset.Employee.name
+            td
+              a.btn.btn-sm.btn-outline-primary(href='/assets/' + asset.id + '/edit') Edit

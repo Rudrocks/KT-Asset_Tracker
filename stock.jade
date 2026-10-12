@@ -1,0 +1,47 @@
+extends layout.jade
+
+block content
+  h1.h2.mb-1 Stock by branch
+  p.text-muted Assets currently ready to be issued.
+  .table-responsive.mb-4
+    table.table.table-striped.align-middle
+      thead
+        tr
+          th Branch
+          th Asset count
+          th Stock value
+      tbody
+        each total in branchTotals
+          tr
+            td= total.branch
+            td= total.count
+            td= formatMoney(total.value)
+        if !branchTotals.length
+          tr
+            td.text-muted(colspan="3") No assets are currently in stock.
+      tfoot
+        tr
+          th Total
+          th= assets.length
+          th= formatMoney(totalValue)
+  h2.h4 Assets ready to issue
+  .table-responsive
+    table.table.table-striped.align-middle.data-table
+      thead
+        tr
+          th Asset
+          th Category
+          th Make / Model
+          th Serial
+          th Branch
+          th Purchase cost
+      tbody
+        each asset in assets
+          tr
+            td
+              a(href='/assets/' + asset.id + '/history')= asset.assetTag
+            td= asset.Category.name
+            td= asset.make + ' ' + asset.model
+            td= asset.serialNumber
+            td= asset.branch
+            td= formatMoney(asset.purchaseCost)
